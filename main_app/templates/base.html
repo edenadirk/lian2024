@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KindnessConnect - {% block title %}{% endblock %}</title>
+    {% csrf_token %}
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <style>
+        /* Custom styles for larger navbar */
+        .navbar {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .navbar-brand img {
+            height: 50px; /* Increased logo size */
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.1rem; /* Larger font size for nav items */
+            padding: 0.5rem 1rem; /* More padding for nav items */
+        }
+        .navbar .btn {
+            padding: 0.5rem 1rem; /* Larger buttons */
+            font-size: 1.1rem;
+        }
+        /* Styles for notification icon */
+        .notification-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            padding: 3px 5px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 10x; /* Minimum width to accommodate text */
+            height: 16px;    /* Height to make it a circle */
+            line-height: 1;  /* Adjust line height to center text vertically */
+            white-space: nowrap; /* Prevent text from wrapping */
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'landing' %}">
+                <img src="{% static 'images/LOGO.png' %}" alt="KindnessConnect">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'landing' %}"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}"><i class="bi bi-info-circle"></i> About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'donorInfo' %}"><i class="bi bi-heart"></i> Donor Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'recipientInfo' %}"><i class="bi bi-people"></i> Recipient Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'analytics' %}"><i class="bi bi-graph-up"></i> Analytics</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'notifications_list' %}">
+                            <div class="notification-icon">
+                                <i class="bi bi-bell"></i>
+                                <span class="notification-badge" id="notification-count"></span>
+                            </div>
+                        </a>
+                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'myProfile' %}"><i class="bi bi-person"></i> My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link btn btn-link"><i class="bi bi-box-arrow-right"></i> Log Out</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}"><i class="bi bi-person-plus"></i> Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1">
+        <div class="container my-4">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="bg-light py-4 mt-auto">
+        <!-- ... (footer content remains the same) ... -->
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    {% if user.is_authenticated %}
+    <script>
+        function updateNotificationCount() {
+            fetch('{% url "get_notification_count" %}')
+                .then(response => response.json())
+                .then(data => {
+                    const countElement = document.getElementById('notification-count');
+                    countElement.textContent = data.count;
+                    countElement.style.display = data.count > 0 ? 'inline' : 'none';
+                });
+        }
+
+        // Update notification count every 3 seconds
+        setInterval(updateNotificationCount, 3000);
+
+        // Initial update
+        updateNotificationCount();
+    </script>
+    {% endif %}
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

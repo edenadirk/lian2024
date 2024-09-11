@@ -1,0 +1,259 @@
+/* * {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #3D0B37;
+    background-color: #CBEAA6;
+    page-break-after: auto;
+}
+
+header {
+    display: flex;
+    width: 100vw;
+    background-color: #134A2D;
+}
+
+.links-container {
+    background-color: #134A2D;
+    color: #94386E !important;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.main-container {
+    width: 85vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin: top 10px !important; 
+}
+
+.logo {
+    font-size: 7em;
+    color: #3D0B37;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.main-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin: top 10px; 
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 5px;
+}
+
+.info-container {
+    width: 90vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin: top 10px !important; 
+}
+
+.info-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.info-posts {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 5px;
+}
+
+.info-content {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: flex-start;
+    padding: 5px;
+}
+
+.profile-info {
+    width: 90vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin: top 10px !important; 
+}
+
+.form-cont {
+    background-color: #134A2D90;
+    color: #FAFDED;
+    padding: 10px;
+    border-radius: 4%;
+}
+
+.form-cont .btn {
+    background-color: #CBEAA6;
+    color: #3D0B37;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    color: #94386E;
+}
+
+p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+.btn {
+    background-color: #3D0B37;
+    color: #CBEAA6;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.search-contant {
+    background-color: #3D0B37;
+    color: #CBEAA6;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 5px;
+}
+
+     */
+
+/* Import the Roboto font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #262626;
+}
+
+.main-container {
+    width: 90vw;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.logo {
+    font-size: 4em;
+    color: #262626;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.main-header {
+    font-size: 2em;
+    color: #262626;
+    margin-bottom: 20px;
+}
+
+.main-content {
+    margin-bottom: 20px;
+}
+
+.search {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.search input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #dbdbdb;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #3897f0;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.search button:hover {
+    background-color: #287bb5;
+}
+
+.info-container {
+    margin-top: 20px;
+}
+
+.list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-group-item {
+    background-color: #fafafa;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-decoration-none {
+    text-decoration: none;
+    color: #262626;
+    font-weight: 500;
+}
+
+.text-decoration-none:hover {
+    text-decoration: underline;
+}

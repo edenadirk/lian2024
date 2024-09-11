@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Landing{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center p-5">
+                    <div class="mb-4">
+                        <i class="bi bi-heart-fill text-danger" style="font-size: 4rem;"></i>
+                    </div>
+                    <h1 class="card-title display-4 mb-4">KindnessConnect</h1>
+                    <p class="card-text lead mb-5">
+                        KindnessConnect is designed to empower individuals in need of life-saving donations. 
+                        We provide a platform where you can reach out for help without the repeated stress 
+                        of difficult, direct conversations with people in your life.
+                    </p>
+                    <a href="{% url 'about' %}" class="btn btn-primary btn-lg">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-people-fill text-primary mb-3" style="font-size: 2rem;"></i>
+                    <h5 class="card-title">Connect</h5>
+                    <p class="card-text">Join a community of caring individuals ready to make a difference.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi-share text-danger mb-3" style="font-size: 2rem;"></i>
+                    <h5 class="card-title">Share</h5>
+                    <p class="card-text">Share your story and needs in a supportive, understanding environment.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-gift-fill text-success mb-3" style="font-size: 2rem;"></i>
+                    <h5 class="card-title">Receive</h5>
+                    <p class="card-text">Receive the help you need with dignity and gratitude.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

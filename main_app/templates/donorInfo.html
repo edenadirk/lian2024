@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Donor Info{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <div class="display-4 mb-3">
+                <i class="bi bi-heart-fill text-danger"></i>
+            </div>
+            <h1 class="display-5 fw-bold mb-3">Potential Donor Information</h1>
+            <p class="lead text-muted mb-4">Empowering Giving, Transforming Lives</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-8 mx-auto">
+            <form method="GET" action="{% url 'donorInfo' %}" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search donors or posts..." value="{{ search_query }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title h4 mb-4">Donor Information</h3>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">
+                            <p class="mb-0">Welcome to Our Donation System:</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p class="mb-0">If you're passionate about making a difference and eager to support causes that matter, you're in the right place. Our platform connects you with impactful projects and organizations in need of your generosity. Here's how you can become a part of our community of changemakers:</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Discover Meaningful Causes</h5>
+                            <p class="mb-0">Explore our curated selection of causes and projects, each carefully vetted for authenticity, impact, and transparency. Whether you're passionate about education, healthcare, environmental conservation, or humanitarian aid, you'll find a cause that resonates with your values and interests.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Make a Difference with Your Donation</h5>
+                            <p class="mb-0">Your donation has the power to transform lives and communities. Whether it's a one-time contribution, a recurring donation, or support for a specific fundraising campaign, every dollar you give makes a meaningful impact. We prioritize transparency and accountability, ensuring that your donation is used effectively and efficiently to maximize its impact.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Personalized Giving Experience</h5>
+                            <p class="mb-0">We believe in empowering donors to give in a way that aligns with their values and preferences. Customize your giving experience by choosing the causes you care about, setting donation preferences, and tracking the impact of your contributions over time. We're here to support you in your journey of giving, every step of the way.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Stay Informed and Connected</h5>
+                            <p class="mb-0">As a donor, you'll receive regular updates and reports on the progress and impact of the causes you support. Stay informed about how your contributions are making a difference in the lives of others and connect with the organizations and projects you care about. Your generosity doesn't end with your donation—it's the beginning of a meaningful relationship with causes that matter.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Amplify Your Impact</h5>
+                            <p class="mb-0">Spread the word about the causes you support and inspire others to join you in making a difference. Share your giving journey with friends, family, and colleagues, and encourage them to join our community of changemakers. Together, we can amplify our impact and create positive change on a global scale.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Support Whenever You Need It</h5>
+                            <p class="mb-0">Have questions or need assistance with your giving journey? Our dedicated support team is here to help. Whether you need help finding the right cause, navigating the donation process, or accessing impact reports, we're just a message away. Your satisfaction and confidence in your giving experience are our top priorities.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p class="mb-0">Thank you for choosing to be a part of our community of generous donors. Your support has the power to change lives and create a better world for all.</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 mb-4 mb-lg-0">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h3 class="card-title h4 mb-4">Donor Posts</h3>
+                    
+                    <!-- Category Filter -->
+                    <form method="GET" action="{% url 'donorInfo' %}" class="mb-4">
+                        <div class="form-group">
+                            <label for="category">Filter by Category:</label>
+                            <select name="category" id="category" class="form-control">
+                                <option value="">All Categories</option>
+                                {% for category_code, category_name in categories %}
+                                    <option value="{{ category_code }}" {% if selected_category == category_code %}selected{% endif %}>
+                                        {{ category_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% if search_query %}
+                            <input type="hidden" name="search" value="{{ search_query }}">
+                        {% endif %}
+                        <button type="submit" class="btn btn-secondary btn-sm mt-2">Apply Filter</button>
+                    </form>
+                    
+                    <ul class="list-group list-group-flush">
+                        {% for post in posts %}
+                        <li class="list-group-item d-flex align-items-center">
+                            {% if post.photo %}
+                                <img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% else %}
+                                <div class="bg-light me-3" style="width: 50px; height: 50px;"></div>
+                            {% endif %}
+                            <div class="d-flex justify-content-between align-items-center w-100">
+                                <div>
+                                    <a href="{% url 'showPost' post.id %}" class="text-decoration-none">
+                                        {{ post.title }}
+                                        <small class="text-muted d-block">{{ post.date }}</small>
+                                    </a>
+                                    {% if post.category %}
+                                        <span class="badge bg-secondary">{{ post.get_category_display }}</span>
+                                    {% endif %}
+                                </div>
+                                {% if user.is_authenticated and post.author == request.user.profile %}
+                                <a href="{% url 'editPost' post.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No posts found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                    <nav aria-label="Donor posts navigation">
+                        <ul class="pagination justify-content-center mb-0">
+                            {% if posts.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ posts.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            
+                            <li class="page-item disabled">
+                                <span class="page-link">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+                            </li>
+                            
+                            {% if posts.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ posts.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+<!-- <form method="GET" action="{% url 'search' %}">
+    <input type="text" name="q" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+
+{% if search_results %}
+    <h2>Search Results</h2>
+    <ul>
+    {% for result in search_results %}
+        <li><a href="{% url 'showPost' result.id %}">{{ result.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="main-container">
+        <div class="logo">MyLogo</div>
+        <h1 class="main-header">Search Page</h1>
+        <div class="main-content">
+            <form method="GET" action="{% url 'search' %}" class="search">
+                <input type="text" name="q" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        {% if search_results %}
+            <div class="info-container">
+                <h2>Search Results</h2>
+                <ul class="list-group">
+                {% for result in search_results %}
+                    <li class="list-group-item">
+                        <a href="{% url 'showPost' result.id %}" class="text-decoration-none">
+                            {{ result.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>

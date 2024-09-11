@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recipient Info{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <div class="display-4 mb-3">
+                <i class="bi bi-heart-fill text-danger"></i>
+            </div>
+            <h1 class="display-5 fw-bold mb-3">Potential Recipient Information</h1>
+            <p class="lead text-muted mb-4">Connecting Needs with Generosity</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-8 mx-auto">
+            <form method="GET" action="{% url 'recipientInfo' %}" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search recipients or posts..." value="{{ search_query }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title h4 mb-4">Recipient Information</h3>
+                    <p class="lead">Welcome to Our Donation System</p>
+                    <p>If you're an individual, organization, or community project in need of support, our platform is here to connect you with compassionate donors eager to make a difference. Here's how you can benefit from our services:</p>
+                    <ol class="list-group list-group-numbered mt-4">
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Create Your Project Profile</h5>
+                            <p class="mb-0">Start by creating a detailed profile for your project or cause. Explain your mission, goals, and the specific needs you're addressing. The more information you provide, the easier it will be for donors to understand and support your cause.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Share Your Story</h5>
+                            <p class="mb-0">Use our platform to share your story and the impact you're trying to make. Whether it's through text, photos, or videos, help potential donors connect emotionally with your cause and understand the difference their support can make.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Set Clear Goals</h5>
+                            <p class="mb-0">Define specific, achievable goals for your fundraising efforts. Whether it's a target amount or a particular project milestone, clear goals help donors understand what their contributions will accomplish.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Receive Donations Securely</h5>
+                            <p class="mb-0">Our platform provides a secure and transparent way for donors to contribute to your cause. We handle the transaction processing, ensuring that you receive the funds safely and efficiently.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Engage with Donors</h5>
+                            <p class="mb-0">Build relationships with your supporters through our messaging system. Keep them updated on your progress, answer their questions, and show them the impact of their generosity.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Track Your Progress</h5>
+                            <p class="mb-0">Use our dashboard to monitor your fundraising progress, manage donations, and generate reports. This data can help you refine your strategies and demonstrate your impact to supporters and stakeholders.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="mb-2">Access Resources and Support</h5>
+                            <p class="mb-0">Take advantage of our educational resources, fundraising tips, and customer support to maximize your success on our platform. We're here to help you achieve your goals and make a lasting impact.</p>
+                        </li>
+                    </ol>
+                    <p class="mt-4">Thank you for considering our donation system as a partner in your journey to create positive change. We look forward to supporting you in making a difference in the world.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 mb-4 mb-lg-0">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h3 class="card-title h4 mb-4">Recipient Posts</h3>
+
+                    <!-- Category Filter -->
+                    <form method="GET" action="{% url 'recipientInfo' %}" class="mb-4">
+                        <div class="form-group">
+                            <label for="category">Filter by Category:</label>
+                            <select name="category" id="category" class="form-control">
+                                <option value="">All Categories</option>
+                                {% for category_code, category_name in categories %}
+                                    <option value="{{ category_code }}" {% if selected_category == category_code %}selected{% endif %}>
+                                        {{ category_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% if search_query %}
+                            <input type="hidden" name="search" value="{{ search_query }}">
+                        {% endif %}
+                        <button type="submit" class="btn btn-secondary btn-sm mt-2">Apply Filter</button>
+                    </form>
+
+                    <ul class="list-group list-group-flush">
+                        {% for post in posts %}
+                        <li class="list-group-item d-flex align-items-center">
+                            {% if post.photo %}
+                                <img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% else %}
+                                <div class="bg-light me-3" style="width: 50px; height: 50px;"></div>
+                            {% endif %}
+                            <div class="flex-grow-1">
+                                <a href="{% url 'showPost' post.id %}" class="text-decoration-none">
+                                    {{ post.title }}
+                                    <small class="text-muted d-block">{{ post.date }}</small>
+                                </a>
+                                {% if post.category %}
+                                    <span class="badge bg-secondary">{{ post.get_category_display }}</span>
+                                {% endif %}
+                            </div>
+                            {% if user.is_authenticated and post.author == request.user.profile %}
+                            <a href="{% url 'editPost' post.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            {% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No posts found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                    <nav aria-label="Recipient posts navigation">
+                        <ul class="pagination justify-content-center mb-0">
+                            {% if posts.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ posts.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            
+                            <li class="page-item disabled">
+                                <span class="page-link">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+                            </li>
+                            
+                            {% if posts.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ posts.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

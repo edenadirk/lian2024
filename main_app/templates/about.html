@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Landing{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center p-5">
+                    <div class="logo mb-4">
+                        <i class="bi bi-people-fill text-primary" style="font-size: 3.5rem;"></i>
+                    </div>
+                    <h1 class="card-title display-4 mb-4">KindnessConnect</h1>
+                    <div class="main-content">
+                        <p class="lead">
+                            KindnessConnect is designed to give people in need of a life-saving donation 
+                            the ability to ask for help without having to directly have that difficult 
+                            and awkward conversation with the people in their lives... repeatedly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: #f8f9fa;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .logo {
+        background-color: #e9ecef;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+</style>
+{% endblock %}
